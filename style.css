@@ -349,5 +349,6 @@ input[type="button"]:hover {
     }
     #equal {
         margin-left: 20px;
+        background: cadetblue;
     }
 }
