@@ -2,6 +2,8 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
+    
 }
 .container-fluid {
     width: 100%;
@@ -114,6 +116,7 @@ body {
     font-size: 33px;
     font-weight: 600;
     font-family: "Calculator", sans-serif;
+    transition: all 3s linear;
 }
 .sw {
     width: 100%;
@@ -139,6 +142,8 @@ body {
     height: 30px;
     background: purple;
     border-radius: 20px;
+    display: grid;
+    place-items: center;
 }
 .btn-list {
     width: 270px;

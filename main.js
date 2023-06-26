@@ -14,7 +14,7 @@ document.querySelector("body").innerHTML=`        <div class="container-fluid" i
                         </div>
                         <input type="text" id="number" readonly="readonly" />
                         <div class="sw">
-                            <div class="s"><div class="swi"></div></div>
+                            <div class="s"><div class="swi">Off</div></div>
                         </div>
                         <div class="btn-list">
                             <input type="button" value="1" /> <input type="button" value="2" /> <input type="button" value="3" /> <input type="button" value="+" /> <input type="button" value="4" /> <input type="button" value="5" />
@@ -50,14 +50,34 @@ let ct = 1;
 function swit() {
     if (ct === 1) {
         ct = 0;
+        sw.textContent="On"
         sw.style.marginLeft = "30px";
         s.style.background = "white";
         contain.style.transform = "rotateX(45deg)";
+             //inputNum();
+            input.value="Sound On" ;
+         let time=setTimeout(()=>{
+               input.value="";
+             },300)
+         clearTimeout(400,time);
+
     } else {
+         sw.textContent="Off"
+
         ct = 1;
         sw.style.marginLeft = "0px";
         s.style.background = "red";
         contain.style.transform = "translate(-14%,13%)";
+        
+        input.value = "Sound Off";
+       let oftime=setTimeout(() => {
+          input.value = "";
+        }, 300)
+        
+       clearTimeout(400,oftime) ;
+        
+        
+        
     }
 }
 
@@ -70,7 +90,23 @@ arry.forEach((e, ind) => {
     e.addEventListener("click", inputNum);
 });
 
-function inputNum(e) {
+function spe(msg){
+    
+      let spa=new SpeechSynthesisUtterance(msg);
+      spa.rate=4.8;
+      speechSynthesis.speak(spa);
+
+
+  
+  
+}
+
+
+
+
+
+
+function inputNum (e){
     if (input.value === "Erorr") {
         input.value = "";
     }
@@ -80,6 +116,12 @@ function inputNum(e) {
     audio.playbackRate = 3;
 
     audio.play();
+    
+  let msg=e.target.value;
+
+  if(ct===0){ spe(msg)
+  }
+    
 }
 
 document.querySelector(".swi").addEventListener("click", () => {
@@ -94,17 +136,43 @@ function clearResult() {
 
 function del() {
     let v = input.value;
-    if (v > 0) {
+    if (v.length > 0) {
         let up = v.slice(0, -1);
         input.value = up;
     }
 }
 
+  let geti=JSON.parse(localStorage.getItem("last"));
+
+console.log(geti.length)
+
+    let x=geti.length;
+
+
 function pre() {
-    for (let i = 0; i < data.length; i++) {
-        input.value = data[i];
+  
+    console.log(geti)
+
+
+    
+    
+    
+    if(x>0){
+      x--;;
     }
-    data.splice(data.length - 1, 1);
+    
+    if(x===0){
+      x=geti.length-1;
+    }
+    
+
+input.value=geti[x];
+  
+    
+    
+    
+    
+    
 }
 
 //.......................
@@ -112,10 +180,15 @@ function pre() {
 try {
     function calculateResult() {
         //genaret sound effect....
+         
+   var input = document.getElementById("number");
 
-        let audio = new Audio("/audio/Bell Sound.mp3");
-        audio.playbackRate = 5;
-        audio.play();
+       
+         
+      
+      
+
+       
 
         let ip = input.value;
         let ipl = ip.length;
@@ -146,10 +219,41 @@ try {
         }
 
         data.push(input.value);
+        
+        // if(input.value==="0000"){
+        //   let con = confirm("Do you want to delete data? ");
+          
+        //   if(con){
+        //     data.push("xxx")
+        //     localStorage.setItem("last","xxx");
+        //   }
+          
+          
+        // }
+        
+        
+    let seti=localStorage.setItem("last",JSON.stringify(data));
+
+        
+        
+        
+        
         // console.log(data)
         let res = eval(input.value);
-        let resu = res.toFixed(2);
+        let resu = res.toFixed(5);
         input.value = resu;
+        
+        
+        let msg=input.value;
+    
+      let spa=new SpeechSynthesisUtterance(msg);
+      spa.rate=2;
+      speechSynthesis.speak(spa);
+
+
+        
+        
+        
     }
 } catch (err) {
     console.log("vff");
